@@ -2,6 +2,15 @@ angular.module('citiesApp')
     .controller('loginCtrl', ['$http', '$scope', '$location', '$window', 'localStorageService', function ($http, $scope, $location, $window, localStorageService) {
 
 
+        document.getElementById('home').style.display = 'none';
+
+        $http.get('http://localhost:8080/poi/POIs')
+            .then(function (response) {
+                $scope.pois = response.data;
+
+            });
+
+
         $scope.checkUser = function () {
             if ($scope.isValid()) {
                 var data = {userName: $scope.userName, password: $scope.password};
@@ -11,6 +20,7 @@ angular.module('citiesApp')
                         if (response.data == "login without cookie") {
                             document.getElementById('login').style.display = 'none';
                             document.getElementById('register').style.display = 'none';
+                            document.getElementById('home').style.display = 'inline-block';
                             //document.getElementById('cartC').style.display = 'inline-block';
 
                             $window.isLoggedIn = true;
@@ -29,8 +39,8 @@ angular.module('citiesApp')
                             localStorageService.cookie.set('currentDate', d);
                             document.getElementById('login').style.display = 'none';
                             document.getElementById('register').style.display = 'none';
+                            document.getElementById('home').style.display = 'inline-block';
                             //document.getElementById('cartC').style.display = 'inline-block';
-
                             $window.isLoggedIn = true;
                             $window.m_currentUserName = $scope.userName;
                             $location.path('/home');

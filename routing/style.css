@@ -152,10 +152,6 @@ main{
     width: 150px;
 }
 
-.frame{
-
-
-}
 .headline{
     text-align: center;
     background-color: black;
@@ -178,3 +174,7 @@ main{
 #cartC{
     top: -20px;
 }
+
+/*
+TEST
+ */

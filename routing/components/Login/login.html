@@ -18,9 +18,46 @@
     </form>
 
 </div>
-<div>
+<div style="text-align: center">
+    <a href="#/register">Sign up for full experience! </a> <br/> <br/>
     <a href="#/retrievePassword">Forgot Your Password?</a>
 
+
+    <br/> <br/>
+    <br/> <br/>
 </div>
+
+
+<div ng-repeat="poi in pois" style="float:left; text-align: ">
+
+    <img ng-src="{{poi.ImageURL}}" class="img-thumbnail" type="button" data-toggle="modal" data-target="#myModal">
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <img ng-src="{{poi.ImageURL}}" style="width: 100%">
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <p>Some text in the modal.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
 </body>
 </html>
