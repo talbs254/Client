@@ -1,12 +1,30 @@
 angular.module('citiesApp')
-    .controller('loginCtrl', ['$http', '$scope', '$location', '$window', 'localStorageService', function ($http, $scope, $location, $window, localStorageService) {
-
+    .controller('loginCtrl', ['$http', '$scope', '$location', '$window', 'localStorageModel', function ($http, $scope, $location, $window, localStorageModel) {
 
         document.getElementById('home').style.display = 'none';
 
+        function shuffle(array) {
+            var currentIndex = array.length, temporaryValue, randomIndex;
+
+            // While there remain elements to shuffle...
+            while (0 !== currentIndex) {
+
+                // Pick a remaining element...
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex -= 1;
+
+                // And swap it with the current element.
+                temporaryValue = array[currentIndex];
+                array[currentIndex] = array[randomIndex];
+                array[randomIndex] = temporaryValue;
+            }
+
+            return array;
+        }
+
         $http.get('http://localhost:8080/poi/POIs')
             .then(function (response) {
-                $scope.pois = response.data;
+                $scope.pois = shuffle(response.data);
 
             });
 
@@ -17,26 +35,16 @@ angular.module('citiesApp')
 
                 $http.post('http://localhost:8080/login', data)
                     .then(function (response) {
-                        if (response.data == "login without cookie") {
-                            document.getElementById('login').style.display = 'none';
-                            document.getElementById('register').style.display = 'none';
-                            document.getElementById('home').style.display = 'inline-block';
-                            //document.getElementById('cartC').style.display = 'inline-block';
-
-                            $window.isLoggedIn = true;
-                            $window.m_currentUserName = $scope.userName;
-                            $location.path('/home');
-                        }
-                        else if (response.data == 'no such user exists.') {
+                        if (response.data.message == 'no such user exists.') {
                             window.alert('Wrong username');
                         }
-                        else if (response.data == 'Authentication failed. Wrong password.') {
+                        else if (response.data.message == 'Authentication failed. Wrong password.') {
                                 window.alert('Wrong password');
                         }
                          else {
-                            var d = Date().toString();
-                            localStorageService.cookie.set('currentUser', response.data);
-                            localStorageService.cookie.set('currentDate', d);
+                            var date = Date().toString();
+                            localStorageModel.updateLocalStorage('token', response.data.token);
+                            localStorageModel.updateLocalStorage('date', date);
                             document.getElementById('login').style.display = 'none';
                             document.getElementById('register').style.display = 'none';
                             document.getElementById('home').style.display = 'inline-block';
