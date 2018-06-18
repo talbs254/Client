@@ -1,0 +1,49 @@
+
+<html ng-app="citiesApp">
+    <head><title>Cities App</title>
+        <link href="style.css" rel="stylesheet" type="text/css" />
+    </head>
+
+    <body>
+
+
+        <div id="fixed">
+            <div id="menu-bar">
+                <h1>Welcome to our POIs web</h1>
+                <ul>
+                    <li id="login"><a href="#/login" >Login</a></li>
+                    <li id="register"><a href="#/register">Register</a></li>
+                    <li><a href="#/home">Home</a></li>
+                    <li><a href="#/about">About</a></li>
+
+                </ul>
+            </div>
+
+        </div>
+
+        <div  ng-view></div>
+
+
+    </body>
+
+
+
+
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+        <script src="node_modules/angular-local-storage/dist/angular-local-storage.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>       
+        <script src="app.js" ></script>
+        <script src="components/POI/poiCtrl.js" ></script>
+        <script src="components/Login/loginCtrl.js" ></script>
+        <script src="components/Register/registerCtrl.js" ></script>
+        <script src="components/RetrievePassword/retrievePasswordCtrl.js" ></script>
+
+
+
+
+ 
+    </html>
+    
+    
+
+    
