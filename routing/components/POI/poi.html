@@ -1,33 +1,88 @@
-<table>
-        <tr ng-repeat="(id , city) in poiCtrl.cities">
-                <td>
-                        <button ng-click="poiCtrl.selectedCity(id)"> add city</button>
-                </td>
-                <td>
-                        <!-- with radio button we would like one data model for each option -->
-                        <input type="radio"  value="{{city.name}}_{{id}}" ng-model="poiCtrl.selected">
-                </td>
+<div class="container" style=" margin-top: 100px;">
+        <div class="row">
+                <div class="panel panel-primary filterable">
+                        <div class="panel-heading">
+                                <h3 class="panel-title"></h3>
 
-                <td>
-                        City name:
-                        <span ng-bind="city.name"></span>
-                        <br> City state:
-                        <span ng-bind="city.state"></span>
-                        <br>
-                        <img ng-style="{'height': '100px'}" ng-src="{{city.image}} ">
-                        </td>      
-                        <td>
-                                <!-- with input we would like to have for each option it's own input -->
-                                <!-- <input type="text " value="{{city.name}}_{{id}} " ng-model="poiCtrl.amount[id] " > -->
-                                <input type="text " value="{{city.name}}_{{id}} " ng-model="poiCtrl.amount[id] " >
-                                <button ng-click="poiCtrl.addToCart(id, city) ">add</button>
-                                </td>
+                        </div>
+                        <table class="table">
+                                <thead>
+                                <tr class="content">
+                                        <th><input type="text" placeholder="#" ></th>
+                                        <th><input type="text" placeholder="Point Of Interest" ></th>
+                                        <th><input type="text" placeholder="Image" disabled style="background: white"></th>
+                                        <th><input type="text" placeholder="Category" ></th>
+                                        <th><input type="text" placeholder="Rank" style="background: white"></th>
+                                        <th><input type="text" placeholder="Description" disabled style="background: white"></th>
+
                                 </tr>
-                                  
-                
+                                </thead>
 
-                
-    
-        
-</table>
-        Selected city: {{poiCtrl.selected}}
+                                <tbody>
+                                <tr ng-repeat="poi in pois">
+                                        <td>{{$index+1}}</td>
+                                        <td>{{poi.POI_id}}</td>
+                                        <td>
+                                                <img ng-src="{{poi.ImageURL}}" data-toggle="modal" style="width: 300px; height: 200px;" class="img-thumbnail" data-target="#{{poi.POI_id}}">
+                                                <div class="modal fade" id="{{poi.POI_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                                <h5 class="modal-title" id="#{{poi.POI_id}}"><b>{{poi.POI_id}}</b></h5>
+                                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                        <span aria-hidden="true">&times;</span>
+                                                                                </button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                                <img ng-src="{{poi.ImageURL}}" style="width: 100%">
+                                                                                <p>Views : {{poi.Views}}</p> <br/>
+                                                                                <p>Description : {{poi.Description}}</p> <br/>
+                                                                                <p>Rank : {{poi.Rank}}</p> <br/>
+                                                                                <p>Last Review 1 : {{poi.LastReview1}}</p> <br/>
+                                                                                <p>Last Review 2 : {{poi.LastReview2}}</p> <br/>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                        </div>
+                                                                </div>
+                                                        </div>
+                                                </div>
+                                        </td>
+                                        <td>{{poi.Category}}</td>
+                                        <td>{{poi.Rank}}</td>
+                                        <td>{{poi.Description}}</td>
+                                </tr>
+                                </tbody>
+                        </table>
+                </div>
+        </div>
+</div>
+
+
+<!--
+<div ng-repeat="poi in pois|filter" ng-if="poi.Rank> 3" style="float:left; width: 30%; height:400px;">
+    <img ng-src="{{poi.ImageURL}}" data-toggle="modal" style="width: 100%; height: 100%;" class="img-thumbnail" data-target="#{{poi.POI_id}}">
+        <div class="modal fade" id="{{poi.POI_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="#{{poi.POI_id}}"><b>{{poi.POI_id}}</b></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <img ng-src="{{poi.ImageURL}}" style="width: 100%">
+                    <p>Views : {{poi.Views}}</p> <br/>
+                    <p>Description : {{poi.Description}}</p> <br/>
+                    <p>Rank : {{poi.Rank}}</p> <br/>
+                    <p>Last Review 1 : {{poi.LastReview1}}</p> <br/>
+                    <p>Last Review 2 : {{poi.LastReview2}}</p> <br/>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,27 +1,33 @@
 angular.module('citiesApp')
- .controller('poiCtrl', [function() {
- 
+    .controller('poiCtrl', ['$http', '$scope', '$location', '$window', function($http, $scope, $location, $window) {
 
-    self = this;
+        function shuffle(array) {
+            var currentIndex = array.length, temporaryValue, randomIndex;
 
-    self.cities = {
-        1 : {name:"Paris", state: "France", image: "https://media-cdn.tripadvisor.com/media/photo-s/0d/f5/7c/f2/eiffel-tower-priority.jpg"}
-        ,2 : {name:"Jerusalem", state: "Israel", image: "https://cdni.rt.com/files/2017.12/article/5a3fe04efc7e93cd698b4567.jpg"}
-        ,3 : {name:"London", state: "England", image: "http://www.ukguide.co.il/Photos/England/London/British-Royal-Tour.jpg"}
-    }
+            // While there remain elements to shuffle...
+            while (0 !== currentIndex) {
 
-    self.selectedCity= function (id){
+                // Pick a remaining element...
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex -= 1;
 
-        console.log (self.selected )
-    }
+                // And swap it with the current element.
+                temporaryValue = array[currentIndex];
+                array[currentIndex] = array[randomIndex];
+                array[randomIndex] = temporaryValue;
+            }
 
-    self.addToCart = function (id, city) {
+            return array;
+        }
 
-        console.log(id)
-        console.log(city)
-        console.log(self.amount[id])
+        $http.get('http://localhost:8080/poi/POIs')
+            .then(function (response) {
+                $scope.pois = shuffle(response.data);
 
+            });
 
-    }
+        self.addToCart = function (poi_id) {
 
- }]);
+        }
+
+    }]);
