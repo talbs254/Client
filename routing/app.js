@@ -12,10 +12,10 @@ app.config(['$locationProvider', '$routeProvider', function($locationProvider, $
     })
         .when('/home', {
             templateUrl: 'components/Home/home.html',
-            controller : 'home as homeCtrl'
+            controller : 'homeCtrl as homeCtrl'
         }).when('/about', {
             templateUrl: 'components/About/about.html',
-            controller : 'aboutCtrl as abtCtrl'
+            //controller : 'aboutCtrl as abtCtrl'
         }).when('/login', {
             templateUrl: 'components/Login/login.html',
             controller : 'loginCtrl as loginCtrl'
@@ -32,8 +32,8 @@ app.config(['$locationProvider', '$routeProvider', function($locationProvider, $
         .otherwise({ redirectTo: '/' });
 
 
-}]);
 
+}]);
 
 
 

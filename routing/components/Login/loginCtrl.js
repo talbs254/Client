@@ -42,9 +42,7 @@ angular.module('citiesApp')
                                 window.alert('Wrong password');
                         }
                          else {
-                            var date = Date().toString();
                             localStorageModel.updateLocalStorage('token', response.data.token);
-                            localStorageModel.updateLocalStorage('date', date);
                             document.getElementById('login').style.display = 'none';
                             document.getElementById('register').style.display = 'none';
                             document.getElementById('home').style.display = 'inline-block';

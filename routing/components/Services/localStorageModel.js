@@ -1,5 +1,5 @@
 angular.module("citiesApp")
-    .service('localStorageModel', ['localStorageService', function(localStorageService) {
+    .service('localStorageModel',['localStorageService','setHeadersToken', function(localStorageService,setHeadersToken) {
 
         var self=this;
 
@@ -18,13 +18,14 @@ angular.module("citiesApp")
 
         self.getLocalStorage = function (key)
         {
-            return  localStorageService.get(key)
+            return localStorageService.get(key)
         }
 
         self.updateLocalStorage = function (key,value)
         {
             localStorageService.remove(key);
             localStorageService.set(key,value);
+            setHeadersToken.set(value)
         }
 
     }]);
