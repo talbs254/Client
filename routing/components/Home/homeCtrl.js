@@ -3,7 +3,13 @@ angular.module('citiesApp')
 
         $http.get('http://localhost:8080/users/PopularPOI')
             .then(function (response) {
-                console.log(response)
+                if(response.data.message == 'No favorites added'){
+
+                }
+                else{
+
+                }
+
             });
 
 
