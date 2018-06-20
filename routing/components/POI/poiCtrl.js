@@ -1,5 +1,7 @@
 angular.module('citiesApp')
-    .controller('poiCtrl', ['$http', '$scope', '$location', '$window', function($http, $scope, $location, $window) {
+    .controller('poiCtrl', ['favoritesModel','$http', '$scope', '$location', '$window', function(favoritesModel, $http, $scope, $location, $window) {
+
+        $("#favoriteTbl tbody").sortable()
 
         function shuffle(array) {
             var currentIndex = array.length, temporaryValue, randomIndex;
@@ -20,14 +22,27 @@ angular.module('citiesApp')
             return array;
         }
 
+
+
+        $scope.isInFavorite = function(poi,idx,rank){
+            return favoritesModel.isFavorite(poi);
+
+        };
+        $scope.addToFavorite = function(e, poi){
+            $(e.currentTarget).children().toggleClass("starColor");
+            favoritesModel.addToFav(poi);
+        }
+
+
+
         $http.get('http://localhost:8080/poi/POIs')
             .then(function (response) {
-                $scope.pois = shuffle(response.data);
+                $scope.pois = response.data;
 
             });
 
-        self.addToCart = function (poi_id) {
-
+        $scope.save = function () {
+            favoritesModel.updateUserFavorites()
         }
 
     }]);

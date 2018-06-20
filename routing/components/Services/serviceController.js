@@ -1,6 +1,8 @@
 angular.module('citiesApp')
     .service('setHeadersToken', ['$http', function ($http) {
 
+        var self=this;
+
         let token = ""
 
         this.set = function (t) {

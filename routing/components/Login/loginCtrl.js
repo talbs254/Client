@@ -3,6 +3,10 @@ angular.module('citiesApp')
 
         document.getElementById('home').style.display = 'none';
 
+
+
+
+
         function shuffle(array) {
             var currentIndex = array.length, temporaryValue, randomIndex;
 
@@ -50,6 +54,8 @@ angular.module('citiesApp')
                             $window.isLoggedIn = true;
                             $window.m_currentUserName = $scope.userName;
                             $location.path('/home');
+
+
                         }
                     });
             }
