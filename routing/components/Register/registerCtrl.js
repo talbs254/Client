@@ -7,6 +7,7 @@ angular.module('citiesApp')
             .then(function (response) {
                 $scope.categories = response.data;
 
+
             });
 
         var request = new XMLHttpRequest();

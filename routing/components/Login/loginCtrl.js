@@ -1,10 +1,7 @@
 angular.module('citiesApp')
-    .controller('loginCtrl', ['$http', '$scope', '$location', '$window', 'localStorageModel', function ($http, $scope, $location, $window, localStorageModel) {
+    .controller('loginCtrl', ['$http', '$scope', '$location', '$window', 'localStorageModel','favoritesModel','serviceController', function ($http, $scope, $location, $window, localStorageModel,favoritesModel,serviceController) {
 
         document.getElementById('home').style.display = 'none';
-
-
-
 
 
         function shuffle(array) {
@@ -22,7 +19,6 @@ angular.module('citiesApp')
                 array[currentIndex] = array[randomIndex];
                 array[randomIndex] = temporaryValue;
             }
-
             return array;
         }
 
@@ -32,14 +28,13 @@ angular.module('citiesApp')
 
             });
 
-
         $scope.checkUser = function () {
             if ($scope.isValid()) {
                 var data = {userName: $scope.userName, password: $scope.password};
 
                 $http.post('http://localhost:8080/login', data)
                     .then(function (response) {
-                        if (response.data.message == 'no such user exists.') {
+                        if (response.data.message == 'No such user exists.') {
                             window.alert('Wrong username');
                         }
                         else if (response.data.message == 'Authentication failed. Wrong password.') {
@@ -47,12 +42,16 @@ angular.module('citiesApp')
                         }
                          else {
                             localStorageModel.updateLocalStorage('token', response.data.token);
+                            localStorageModel.updateLocalStorage('username',$scope.userName);
+                            serviceController.set(response.data.token);
                             document.getElementById('login').style.display = 'none';
                             document.getElementById('register').style.display = 'none';
                             document.getElementById('home').style.display = 'inline-block';
-                            //document.getElementById('cartC').style.display = 'inline-block';
-                            $window.isLoggedIn = true;
-                            $window.m_currentUserName = $scope.userName;
+                            document.getElementById('user').innerText = "Hello " + $scope.userName
+                            document.getElementById('logout').style.display = 'inline-block';
+                            document.getElementById('favorites').style.display = 'inline-block';
+                            favoritesModel.userFavorites();
+
                             $location.path('/home');
 
 
@@ -61,8 +60,6 @@ angular.module('citiesApp')
             }
         }
         $scope.unChange = function () {
-            if ($scope.userName == 'a')
-                return true;
             if ($scope.userName.length == 0) {
                 $scope.UnComment = '';
             } else if ($scope.userName.length < 3 || $scope.userName.length > 8) {
@@ -73,9 +70,6 @@ angular.module('citiesApp')
             }
         }
         $scope.pdChange = function () {
-            if ($scope.password == 'a')
-                return true;
-
             if ($scope.password.length === 0) {
                 $scope.pdComment = '';
             } else if ($scope.password.length < 5 || $scope.password.length > 10) {

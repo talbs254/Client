@@ -1,48 +1,94 @@
 angular.module('citiesApp')
-    .controller('poiCtrl', ['favoritesModel','$http', '$scope', '$location', '$window', function(favoritesModel, $http, $scope, $location, $window) {
+    .controller('poiCtrl', ['serviceController', 'favoritesModel', '$http', '$scope', function (serviceController, favoritesModel, $http, $scope) {
+
+        $scope.pois = serviceController.pois;
+        self.topToDown = true;
 
         $("#favoriteTbl tbody").sortable()
 
-        function shuffle(array) {
-            var currentIndex = array.length, temporaryValue, randomIndex;
-
-            // While there remain elements to shuffle...
-            while (0 !== currentIndex) {
-
-                // Pick a remaining element...
-                randomIndex = Math.floor(Math.random() * currentIndex);
-                currentIndex -= 1;
-
-                // And swap it with the current element.
-                temporaryValue = array[currentIndex];
-                array[currentIndex] = array[randomIndex];
-                array[randomIndex] = temporaryValue;
-            }
-
-            return array;
-        }
-
-
-
-        $scope.isInFavorite = function(poi,idx,rank){
+        $scope.isInFavorite = function (poi) {
             return favoritesModel.isFavorite(poi);
 
         };
-        $scope.addToFavorite = function(e, poi){
+        $scope.addToFavorite = function (e, poi) {
             $(e.currentTarget).children().toggleClass("starColor");
-            favoritesModel.addToFav(poi);
-        }
+            $scope.isInFavorite(poi) ?favoritesModel.removeFromFav(poi): favoritesModel.addToFav(poi);
+        };
+
+        $scope.sortByRank = function () {
+            if ($scope.topToDown) {
+                $scope.topToDown = false;
+                $scope.pois.sort(function (y, x) {
+                    return x.Rank < y.Rank ? -1 : x.Rank > y.Rank ? 1 : 0;
+                });
+            } else {
+                $scope.topToDown = true;
+                $scope.pois.sort(function (x, y) {
+                    return x.Rank < y.Rank ? -1 : x.Rank > y.Rank ? 1 : 0;
+                });
+            }
+        };
 
 
+        $scope.sendReview = function (poi,id) {
+            var id = 'review'+id;
+            var comment = document.getElementById(id).value;
+            if (comment != '') {
+                var data = {pointOfInterest: poi, review: comment}
+                $http.post('http://localhost:8080/users/ReviewPOI', data)
+                    .then(function (res) {
+                        if(res.data=="You already reviewed this POI"){
+                            alert("You already reviewed this POI");
+                        }
+                        else {
+                            $scope.updatePOI(poi);
+                            alert("Thanks for Review");
+                        }
+                    })
+            }
 
-        $http.get('http://localhost:8080/poi/POIs')
-            .then(function (response) {
-                $scope.pois = response.data;
+            else {
+                alert("Fill the review text field");
+            }
+        };
 
-            });
+        $scope.sendRank = function (poi) {
+            var rank = $("input[name=rank]:checked").val();
+            if (rank != undefined) {
+                var data = {pointOfInterest: poi, rank: rank}
+                $http.post('http://localhost:8080/users/RankPOI', data)
+                    .then(function (res) {
+                        if(res.data=="You already ranked this POI"){
+                            alert("You already ranked this POI");
+                        }
+                        else{
+                            $scope.updatePOI(poi);
+                            alert("Thanks for Ranking");
+                        }
+                    });
+            }
+            else {
+                alert("Should choose rank");
+            }
+        };
 
-        $scope.save = function () {
-            favoritesModel.updateUserFavorites()
-        }
+        $scope.updatePOI = function updatePOI(poi) {
+            if(poi!=undefined){
+                var uri = 'http://localhost:8080/poi/' + poi.POI_id;
+                $http.get(uri).then(function (res) {
+                    serviceController.updatePOIs(res.data[0]);
+                });
+            }
+        };
+
+        $scope.isLoggedIn = function () {
+            return document.getElementById('logout').style.display == 'inline-block'
+        };
+
+        $(window).on('shown.bs.modal', function(event) {
+           $scope.updatePOI($scope.pois[parseInt(event.target.id.substring(1))-1]);
+        });
+
+
 
     }]);

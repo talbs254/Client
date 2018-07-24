@@ -15,7 +15,7 @@ app.config(['$locationProvider', '$routeProvider', function($locationProvider, $
             controller : 'homeCtrl as homeCtrl'
         }).when('/about', {
             templateUrl: 'components/About/about.html',
-            //controller : 'aboutCtrl as abtCtrl'
+            controller : 'aboutCtrl as aboutCtrl'
         }).when('/login', {
             templateUrl: 'components/Login/login.html',
             controller : 'loginCtrl as loginCtrl'
@@ -28,6 +28,9 @@ app.config(['$locationProvider', '$routeProvider', function($locationProvider, $
         }).when('/register', {
             templateUrl: 'components/Register/register.html',
             controller: 'registerCtrl as registerCtrl'
+        }).when('/favorites', {
+            templateUrl: 'components/Favorites/favorites.html',
+            controller: 'favoritesCtrl as favoritesCtrl'
         })
         .otherwise({ redirectTo: '/' });
 

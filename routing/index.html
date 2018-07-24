@@ -2,6 +2,7 @@
 <html ng-app="citiesApp">
     <head><title>Cities App</title>
 
+
         <link href="style.css" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
@@ -16,34 +17,39 @@
 
     <body>
 
+            <div id="fixed" >
+                <div id="menu-bar" ng-controller="indexCtrl">
+                    <h1>Welcome to our Playa Del Carmen web</h1>
+                    <ul>
+                        <li id="user">, Hello User </li>
+                        <li ng-click="logout()" id="logout" ng-click="logout()"><a href="#/Login" >Logout</a></li>
+                        <li id="login"><a href="#/login" >Login</a></li>
+                        <li id="register"><a href="#/register">Register</a></li>
+                        <li id="home"><a href="#/home">Home</a></li>
+                        <li id="poi"><a href="#/poi">Point Of Interests</a> </li>
+                        <li id="favorites"><a id="favNotification" href="#/favorites" class="badge1">Favorites</a></li>
+                        <li id="about"><a href="#/about">About</a></li>
+                    </ul>
+                    <br>
+                </div>
 
-        <div id="fixed">
-            <div id="menu-bar">
-                <h1>Welcome to our POIs web</h1>
-                <ul>
-                    <li id="login"><a href="#/login" >Login</a></li>
-                    <li id="register"><a href="#/register">Register</a></li>
-                    <li id="home"><a href="#/home">Home</a></li>
-                    <li id="poi"><a href="#/poi">Point Of Interests</a> </li>
-                    <li><a href="#/about">About</a></li>
-
-                </ul>
             </div>
 
-        </div>
 
-        <div  ng-view></div>
+            <br/>
+            <br/>
+            <br/>
 
+
+        <div ng-view></div>
 
     </body>
 
-
-
-
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
         <script src="node_modules/angular-local-storage/dist/angular-local-storage.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>       
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
         <script src="app.js" ></script>
+        <script src="components/About/aboutCtrl.js" ></script>
         <script src="components/POI/poiCtrl.js" ></script>
         <script src="components/Login/loginCtrl.js" ></script>
         <script src="components/Register/registerCtrl.js" ></script>
@@ -52,6 +58,12 @@
         <script src="components/Services/serviceController.js" ></script>
         <script src="components/Services/favoritesModel.js" ></script>
         <script src="components/Home/homeCtrl.js" ></script>
+        <script src="components/Favorites/favoritesCtrl.js" ></script>
+        <script src="indexCtrl.js" ></script>
+
+
+
+
 
 
 

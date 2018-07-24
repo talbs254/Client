@@ -5,40 +5,35 @@
     <title>Title</title>
 </head>
 <body>
-<h1 >Register</h1>
-<div class="content">
+<div class="content" style="width: 100%;text-align: center;">
     <form ng-submit="addUser()">
-        <input type="text" ng-model="userName" placeholder="User Name" ng-change="unChange()" required />
+        <input style="text-align: center;" type="text" ng-model="userName" placeholder="User Name" ng-change="unChange()" required />
         <label ng-model="UnComment" >{{UnComment}}</label>
-        <input type="password" ng-model="password" placeholder="Password" ng-change="pdChange()" required/>
+        <input style="text-align: center;" type="password" ng-model="password" placeholder="Password" ng-change="pdChange()" required/>
         <label ng-model="pdComment" >{{pdComment}}</label>
-        <input type="text" placeholder="First Name" ng-model="firstName" required/>
-        <input type="text" placeholder="Last Name" ng-model="lastName" required/>
-        <input type="email" placeholder="Email" ng-model="email" required/>
+        <input style="text-align: center;" type="text" placeholder="First Name" ng-model="firstName" required/>
+        <input style="text-align: center;" type="text" placeholder="Last Name" ng-model="lastName" required/>
+        <input style="text-align: center;" type="email" placeholder="Email" ng-model="email" required/>
         <br/>
-        <label>Country:</label>
+        <label><h3 style="font-family: Comic Sans MS;">Country:</h3></label>
         <br/>
         <select ng-model="country" >
             <option ng-repeat="c in countries " value="{{c.textContent}}">{{c.textContent}}</option>
         </select>
         <br/>
-        <input type="text" placeholder="City" ng-model="city"/>
+        <input style="text-align: center;" type="text" placeholder="City" ng-model="city"/>
         <br/>
-        <label>What's your mother's last name?</label><br/>
-        <input type="text" placeholder="Answer" ng-model="verifier1"/>
+        <input style="text-align: center;" type="text" placeholder="What's your mother's last name?" ng-model="verifier1"/>
         <br/>
-        <label>What's your first pet name?</label><br/>
-
-        <input type="text" placeholder="Answer" ng-model="verifier2"/>
-        <h3>Categories:</h3>
+        <input style="text-align: center;" type="text" placeholder="What's your first pet name?" ng-model="verifier2"/>
+        <h3 style="font-family: Comic Sans MS;">Categories:</h3>
         <br/>
         <br/>
-        <div ng-repeat="category in categories">
-
-            <label >{{category.Category}}
-            </label>
-            <input type="checkbox" id="tal"ng-model="yael" ng-change="listChange(category)" style="margin-left: -30%">
-
+        <div ng-repeat="category in categories" style="font-family: Comic Sans MS">
+            <span>
+                <label style="text-align: center; width: 50%">{{category.Category}}</label>
+                <input type="checkbox" id="{{$index}}" ng-model="yael" ng-change="listChange(category)" style="width: 50%; text-align: center">
+            </span>
         </div>
 
         <input type="submit"  value="Register" />

@@ -1,16 +1,28 @@
 angular.module('citiesApp')
-    .controller('homeCtrl', ['$http', '$scope', '$location', '$window', 'localStorageModel', function ($http, $scope, $location, $window, localStorageModel) {
+    .controller('homeCtrl', ['$scope','$http','serviceController', function ($scope,$http,serviceController) {
+
+        $scope.popularCategory;
+        $scope.lastFavorites;
+        $scope.hasFavorites;
 
         $http.get('http://localhost:8080/users/PopularPOI')
             .then(function (response) {
-                if(response.data.message == 'No favorites added'){
+                $scope.popularCategory = response.data;
+            });
 
+        $http.get('http://localhost:8080/users/2LastFavorites')
+            .then(function (response) {
+                if(response.data == 'No favorites POIs added' ){
+                    $scope.hasFavorites = false;
                 }
                 else{
+                    $scope.hasFavorites = true;
+                    $scope.lastFavorites = response.data;
 
                 }
 
             });
+
 
 
     }]);

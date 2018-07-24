@@ -5,64 +5,110 @@
                 <h3 class="panel-title"></h3>
 
             </div>
-            <button ng-click="save()">Save</button>
+            <button class="btn btn-secondary" style="float: right;" ng-click="sortByRank()">Sort By Rank</button>
+
 
             <table id="favoriteTbl" class="table">
                 <thead>
-                <tr class="content">
-                    <th><input type="text" ng-model="poi_holder" placeholder="Point Of Interest" style="width: 150px;">
-                    </th>
-                    <th><input type="text" placeholder="Image" disabled style="background: white; width: 300px;" ></th>
-                    <th><input type="text" ng-model="category_holder" placeholder="Category" style="width: 100px;"></th>
-                    <th><input type="text" ng-model="rank_holder" placeholder="Rank"
-                               style="background: white; width: 70px;"></th>
-                    <th><input type="text" placeholder="Description" disabled style="background: white"></th>
-                </tr>
-
+                    <tr class="content">
+                        <th><input type="text" class="myclass" ng-model="poi_holder" placeholder="Point Of Interest" style="width: 150px;">
+                        </th>
+                        <th><input type="text" placeholder="Image" disabled style="background: white; width: 300px;" ></th>
+                        <th><input type="text" class="myclass" ng-model="category_holder" placeholder="Category" style="width: 100px;"></th>
+                        <th><input type="text" ng-model="rank_holder" placeholder="Rank"
+                                   style="background: white; width: 70px;"></th>
+                        <th><input type="text" placeholder="Description" disabled style="background: white"></th>
+                    </tr>
                 </thead>
 
                 <tbody>
-                <tr ng-repeat="poi in pois | filter: {'POI_id' : poi_holder} | filter: {'Category' : category_holder} | filter: {'Rank' : rank_holder}">
-                    <td>{{poi.POI_id}}</td>
-                    <td>
-                        <img ng-src="{{poi.ImageURL}}" data-toggle="modal" style="width: 1000px; height: 200px;"
-                             class="img-thumbnail" data-target="#{{index + 1}}">
-                        <div class="modal fade" id="{{index + 1}}" tabindex="-1" role="dialog"
-                             aria-labelledby="#{{index + 1}}" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="#{{index + 1}}"><b>{{poi.POI_id}}</b></h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <img ng-src="{{poi.ImageURL}}" style="width: 100%">
-                                        <p>Views : {{poi.Views}}</p> <br/>
-                                        <p>Description : {{poi.Description}}</p> <br/>
-                                        <p>Rank : {{poi.Rank}}</p> <br/>
-                                        <p>Last Review 1 : {{poi.LastReview1}}</p> <br/>
-                                        <p>Last Review 2 : {{poi.LastReview2}}</p> <br/>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <tr ng-repeat="poi in pois | filter: {'POI_id' : poi_holder} | filter: {'Category' : category_holder}">
+            <td>{{poi.POI_id}}</td>
+            <td>
+                <img ng-src="{{poi.ImageURL}}" data-toggle="modal" style="width: 1000px; height: 200px;" class="img-thumbnail" data-target="#p{{$index + 1}}">
+                <div data-keyboard="false" data-backdrop="static" class="modal fade" id="p{{$index + 1}}" tabindex="-1" role="dialog" aria-labelledby="#p{{$index + 1}}" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="p{{$index + 1}}h"><b>{{poi.POI_id}}</b></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <img ng-src="{{poi.ImageURL}}" style="width: 100%">
+                                <p>Views : {{poi.Views}}</p> <br/>
+                                <p>Description : {{poi.Description}}</p> <br/>
+                                <p>Rank : {{poi.Rank}}</p> <br/>
+                                <p>Last Review 1 : {{poi.LastReview1}}</p> <br/>
+                                <p>Last Review 2 : {{poi.LastReview2}}</p> <br/>
+
+                            </div>
+                            <div class="modal-footer" >
+                                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#m{{$index}}">Add Review\Rank</button>
+                                <!-- Modal -->
+                                <div id="m{{$index}}" class="modal fade" data-backdrop="static" role="dialog">
+                                    <div class="modal-dialog">
+                                        <!-- Modal content-->
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" style="float:left;">Add Review</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <textarea ngstyle="resize:none" id="review{{$index}}" name="name" cols="51" rows="10" maxlength="200" ></textarea>
+                                                <h4 class="modal-title" style="float:left;">Your Rank:</h4>
+                                                <br>
+                                                <br>
+                                                <div class="maxl">
+                                                    <label class="radio inline">
+                                                        <input type="radio" name="rank" value="1">
+                                                        <span> 1 </span>
+                                                    </label>
+                                                    <label class="radio inline">
+                                                        <input type="radio" name="rank" value="2">
+                                                        <span> 2 </span>
+                                                    </label>
+                                                    <label class="radio inline">
+                                                        <input type="radio" name="rank" value="3">
+                                                        <span> 3 </span>
+                                                    </label>
+                                                    <label class="radio inline">
+                                                        <input type="radio" name="rank" value="4">
+                                                        <span> 4 </span>
+                                                    </label>
+                                                    <label class="radio inline">
+                                                        <input type="radio" name="rank" value="5">
+                                                        <span> 5 </span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" ng-click ="sendReview(poi.POI_id, $index)">Send Review</button>
+                                                <button type="button" class="btn btn-secondary" ng-click ="sendRank(poi.POI_id)">Send Rank</button>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
+
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             </div>
                         </div>
-                    </td>
-                    <td>{{poi.Category}}</td>
-                    <td>{{poi.Rank}}</td>
-                    <td>{{poi.Description}}</td>
-                    <td><button ng-click="addToFavorite($event, poi)" style="background: none; border: none;">
-                        <i class="fas fa-star" ng-class="{'starColor': isInFavorite(poi)}">
-                        </i>
-                    </button>
-                    </td>
+                    </div>
+                </div>
+            </td>
 
-                </tr>
-                </tbody>
+            <td>{{poi.Category}}</td>
+            <td>{{poi.Rank}}</td>
+            <td>{{poi.Description}}</td>
+            <td ng-show ="isLoggedIn()"><button ng-click="addToFavorite($event, poi)" style="background: none; border: none;">
+                <i class="fas fa-star" ng-class="{'starColor': isInFavorite(poi)}"></i>
+            </button>
+            </td>
+
+        </tr>
+            </tbody>
             </table>
         </div>
     </div>
