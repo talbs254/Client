@@ -54,7 +54,6 @@ angular.module('citiesApp')
                             alert("You already reviewed this POI");
                         }
                         else {
-                            $scope.updatePOI(poi);
                             alert("Thanks for Review");
                         }
                     })
@@ -74,7 +73,6 @@ angular.module('citiesApp')
                             alert("You already ranked this POI");
                         }
                         else{
-                            $scope.updatePOI(poi);
                             alert("Thanks for Ranking");
                         }
                     });
@@ -84,12 +82,5 @@ angular.module('citiesApp')
             }
         };
 
-        $scope.updatePOI = function updatePOI(poi) {
-            if(poi!=undefined){
-                var uri = 'http://localhost:8080/poi/' + poi.POI_id;
-                $http.get(uri).then(function (res) {
-                    serviceController.updatePOIs(res.data[0]);
-                });
-            }
-        };
+
     }]);
